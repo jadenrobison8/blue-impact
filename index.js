@@ -71,7 +71,7 @@ const promptUser = () => {
 
 //new user 
 const newMember = () => {
-    console.log(employees);
+    //console.log(employees);
     return inquirer.prompt([
         {
             type: 'list',
@@ -89,7 +89,7 @@ const newMember = () => {
         } else if (addMember === 'Intern') {
             return internPrompt();
         } else {
-            return;
+            return generatePage(employees);
         }
     })
 };
@@ -152,7 +152,7 @@ const engineerPrompt = () => {
     .then(function({name, id, email, github}) {
         const engineer = new Engineer(name,id,email,github);
         employees.push(engineer);
-        console.log(engineer.getName());
+        //console.log(engineer.getName());
         newMember();
     });
 };
@@ -214,6 +214,7 @@ const internPrompt = () => {
     ]).then(function({name,id,email,school}) {
         const intern = new Intern(name,id,email,school);
         employees.push(intern);
+        
         newMember();
     })
 };
@@ -224,21 +225,9 @@ promptUser()
         const manager = new Manager(name, id, email, officeNumber);
         employees.push(manager);
         //new card
-        console.log(employees);
+        //console.log(employees);
     })
     .then(newMember)
-    .then(generatePage)
- //   .then(pageHTML => {
-  //      return writeFile(pageHTML);
- //   })
- //   .then(writeFileResponse => {
- //       console.log(writeFileResponse);
- //       return copyFile();
- //   })
- //   .then(copyFileResponse => {
- //       console.log(copyFileResponse);
- //   })
-    .catch(err => {
-        console.log(err);
-    });
+    
+    
     

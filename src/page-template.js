@@ -1,66 +1,88 @@
+const Employee = require("../lib/Employee");
 const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
 const Manager = require("../lib/Manager");
 
-const generateAbout = aboutText => {
-    if (!aboutText) {
-        return '';
-    }
-
+function htmlCards(member) {
     return `
-        <section class="my-3" id="about">
-            <h2 class="text-dark bg-primary p-2 display-inline-block">About Me</h2>
-            <p>${aboutText}>/p>
-        </section>
-    `;
-};
-
-const generateCards = projectsArr => {
-    return `
-        <section class="my-3" id="portfolio">
-            <h2 class="text-dark bg-primary p-2 display-inline-block">Work</h2>
-            <div class="flex-row justify-space-between">
-                ${projectsArr
-                    .filter(({feature}) => feature)
-                    .map(({ name, description, languages, link }) => {
-                        return `
-                        <div class="col-12 mb-2 bg-dark text-light p-3">
-                            <h3 class="portfolio-item-title text-light">${name}</h3>
-                            <h5 class="portfolio-languages">
-                                Built With:
-                                ${languages.join(', ')}
-                            </h5>
-                            <p>${description}</p>
-                            <a href="${link}" class="btn"><i class="fab fa-github mr-2"></i>View Project on GitHub</a>
+        ${member
+            .filter(({ github }) => github)
+            .map(({name, id, email, github}) => {
+                return `
+                <!-- Engineer Employee Card -->
+                <div class="col d-sm-flex justify-content-center">
+                    <div class="card employee-card mt-4">
+                        <div class="card-header">
+                            <h2 class="card-title">${name}</h2>
+                            <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>Engineer</h3>
                         </div>
-                    `;
-                })
-                .join('')}
-
-                ${projectsArr
-                    //.filter(({ feature }) => !feature)
-                    .map(({ name, id, email }) => {
-                    return `
-                    <div class="col-12 col-md-6 mb-2 bg-dark text-light p-3 flex-column">
-                        <h3 class="portfolio-item-title text-light">${name}</h3>
-                        <h5 class="portfolio-languages">
-                        id:
-                        ${id.join(', ')}
-                        </h5>
-                        <p>${email}</p>
-                        <a href="${email}" class="btn mt-auto"><i class="fab fa-github mr-2"></i>View Project on GitHub</a>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">ID: ${id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item">GitHub: <a href="https://github.com/${github}" target="_blank">${github}</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    `;
-                    })
-                    .join('')}
-            </div>
-        </section>
-    `;
-};
+                </div>
+            `;
+        })
+        .join('')}
 
-module.exports = templateData => { 
+        ${member
+            .filter(({school}) => school)
+            .map(({name,id,email,school}) => {
+                return `
+                <!-- Intern Employee Card -->          
+                <div class="col d-sm-flex justify-content-center">
+                    <div class="card employee-card mt-4">
+                        <div class="card-header">
+                            <h2 class="card-title">${name}</h2>
+                            <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>Intern</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">ID: ${id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item">School: ${school}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>              
+            `;
+        })
+        .join('')} 
+
+        ${member
+            .filter(({ officeNumber }) => officeNumber)
+            .map(({ name, id, email, officeNumber}) => {
+                return `
+                <!-- Manager Employee Card -->
+                <div class="col d-sm-flex justify-content-center">
+                    <div class="card employee-card mt-4">
+                        <div class="card-header">
+                            <h2 class="card-title">${name}</h2>
+                            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>Manager</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">ID: ${id}</li>
+                                <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+                                <li class="list-group-item">Office Number: ${officeNumber}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>    
+            `;
+            })
+            .join('')}
+            ${console.log('team added!')}
+    `;
+}
+
+module.exports = employees => { 
     //destructure projects and about data from templateData based on their property key names
-    const { employees } = templateData;
+    const { Manager, Engineer, Intern } = employees;
     //console.log(projects, header, about);
 
     return `
@@ -79,22 +101,21 @@ module.exports = templateData => {
     <body>
         <header>
             <div class="container flex-row justify-space-between align-center py-3">
-                <h1 class="page-title text-secondary bg-dark py-2 px-3">${header.name}</h1>
+                <h1 class="page-title text-secondary bg-dark py-2 px-3">My Team</h1>
                 <nav class="flex-row">
-                    <a class="ml-2 my-1 px-2 py-1 bg-secondary text-dark" href="https://github.com/${header.github}">GitHub</a>
+                    <a class="ml-2 my-1 px-2 py-1 bg-secondary text-dark" href="https://github.com/">GitHub</a>
                 </nav>
             </div>
         </header>
 
         <main class="container my-5">
-            <!--${generateAbout(about)}->
-
-            ${generateCards(employees)}
+            ${console.log(employees)}
+            ${htmlCards(employees)}
 
         </main>
 
         <footer class="container text-center py-3">
-            <h3 class="text-dark">&copy; ${new Date().getFullYear()} by ${header.name}</h3>
+            <h3 class="text-dark">&copy; ${new Date().getFullYear()} by jaden</h3>
         </footer>
 
     </body>

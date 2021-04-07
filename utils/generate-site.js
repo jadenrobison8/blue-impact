@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const writeFile = fileContent => {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./dist/index.html', fileContent, err => {
+        fs.writeFileSync('./dist/index.html', fileContent, err => {
             //if theres an err, reject the promise and send the error to the promises .catch() method
             if (err) {
                 reject(err);

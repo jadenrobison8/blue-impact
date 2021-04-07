@@ -1,5 +1,4 @@
 //intialize application, require/instanitiate
-//const { prototype } = require('events');
 const inquirer = require('inquirer');
 const {writefile, copyFile, writeFile} = require('./utils/generate-site.js');
 const generatePage = require('./src/page-template');
@@ -8,8 +7,6 @@ const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
 let employees = [];
-
-
 
 //prompt function
 const promptUser = () => {
@@ -89,7 +86,8 @@ const newMember = () => {
         } else if (addMember === 'Intern') {
             return internPrompt();
         } else {
-            return generatePage(employees);
+            htmlPage(employees);
+            //return; //generatePage(employees);
         }
     })
 };
@@ -213,8 +211,7 @@ const internPrompt = () => {
         }
     ]).then(function({name,id,email,school}) {
         const intern = new Intern(name,id,email,school);
-        employees.push(intern);
-        
+        employees.push(intern); 
         newMember();
     })
 };
@@ -224,10 +221,14 @@ promptUser()
     .then(function({ name, id, email, officeNumber}) {
         const manager = new Manager(name, id, email, officeNumber);
         employees.push(manager);
-        //new card
-        //console.log(employees);
     })
-    .then(newMember)
+    .then(newMember);
+
+const htmlPage = employees => {
+    pageHTML = generatePage(employees);
+    writeFileResponse = writeFile(pageHTML);
+    console.log(writeFileResponse);
+};
     
     
     

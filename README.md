@@ -25,9 +25,6 @@
   ![scrn1](./assets/scrn1.png)
   ![scrn2](./assets/scrn2.png)
 
-  Video Walkthrough:
-
-
   ## Questions
   Github: github.com/jadenrobison8  
   Email: Jadenrobison8@gmail.com

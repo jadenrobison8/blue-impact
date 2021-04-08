@@ -40,9 +40,9 @@ function engineerCard(member) {
             </div>
             <div class="card-body">
                 <ul class="list-group">
-                    <li class="list-group-item">ID: ${member.id}</li>
+                    <li class="list-group-item">ID: ${member.github}</li>
                     <li class="list-group-item">Email: <a href="mailto:${member.email}">${member.email}</a></li>
-                    <li class="list-group-item">GitHub: <a href="https://github.com/${member.github}" target="_blank">${member.github}</a></li>
+                    <li class="list-group-item">GitHub: <a href="https://github.com/${member.id}" target="_blank">${member.id}</a></li>
                 </ul>
             </div>
         </div>
